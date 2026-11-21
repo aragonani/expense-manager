@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Expense Detail</title>
+</head>
+<body>
+    <h1>Expense Detail</h1>
+    <p><strong>Title:</strong> <%= expense.title %></p>
+    <p><strong>Amount:</strong> $<%= expense.amount %></p>
+    <p><strong>Category:</strong> <%= expense.category %></p>
+    <p><strong>Date:</strong> <%= expense.date %></p>
+
+    <br>
+    <a href="/expense"><button>Back to Expenses</button></a>
+    <br><br>
+    <a href="/expense/<%= expense._id %>/edit"><button>Edit Expense</button></a>
+    <br><br>
+    <form action="/expense/<%= expense._id %>/delete" method="POST">
+        <button type="submit">Delete Expense</button>
+    </form>
+</body>
+</html>

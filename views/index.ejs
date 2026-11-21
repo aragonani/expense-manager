@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Expenses</title>
+</head>
+<body>
+    <h1>Expenses</h1>
+    <% if (user) { %>
+        <p>Welcome, <%= user.name %>! | <a href="/logout">Logout</a></p>
+    <% } else { %>
+        <p><a href="/login">Login</a> or <a href="/register">Register</a></p>
+    <% } %>
+
+    <div class="filters">
+        <a href="/expense"><button class="<%= currentFilter === 'all' ? 'active' : '' %>">All</button></a>
+        <a href="/expense?filter=today"><button class="<%= currentFilter === 'today' ? 'active' : '' %>">Today</button></a>
+        <a href="/expense?filter=last7days"><button class="<%= currentFilter === 'last7days' ? 'active' : '' %>">Last 7 Days</button></a>
+        <a href="/expense?filter=thisMonth"><button class="<%= currentFilter === 'thisMonth' ? 'active' : '' %>">This Month</button></a>
+        <a href="/expense?filter=lastMonth"><button class="<%= currentFilter === 'lastMonth' ? 'active' : '' %>">Last Month</button></a>
+    </div>
+
+    <% if (user) { %>
+        <h2>Add New Expense</h2>
+        <form action="/expense" method="POST">
+            <div>
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <br>
+            <div>
+                <label for="amount">Amount:</label>
+                <input type="number" id="amount" name="amount" required>
+            </div>
+            <br>
+            <div>
+                <label for="category">Category:</label>
+                <input type="text" id="category" name="category">
+            </div>
+            <br>
+            <div>
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date">
+            </div>
+            <br>
+            <button type="submit">Add Expense</button>
+        </form>
+    <% } %>
+
+    <h2>All Expenses</h2>
+    <ul>
+        <% if (expense && expense.length > 0) { %>
+            <% expense.forEach(function(item) { %>
+                <li>
+                    <strong><a href="/expense/<%= item._id %>"><%= item.title %></a></strong> - $<%= item.amount %> (<%= item.category %>)
+                    <br><br>
+                    <a href="/expense/<%= item._id %>/edit"><button>Edit</button></a>
+                    <form action="/expense/<%= item._id %>/delete" method="POST" style="display:inline;">
+                        <button type="submit">Delete</button>
+                    </form>
+                    <br><br>
+                </li>
+            <% }); %>
+        <% } else { %>
+            <p>No expenses found.</p>
+        <% } %>
+    </ul>
+</body>
+</html>
